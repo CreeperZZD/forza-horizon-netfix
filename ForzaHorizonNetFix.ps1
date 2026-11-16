@@ -1,5 +1,5 @@
 ﻿# ======================================================================
-# Forza Horizon 4/5 线上联机 一键修复 / 一键还原 脚本
+# Forza Horizon 4/5/6 线上联机 一键修复 / 一键还原 脚本 / Online Fix
 # ----------------------------------------------------------------------
 # 功能：Fix    - 备份当前网络设置后，一键完成 Xbox Live + Teredo 修复
 #       Restore- 按备份文件还原到修复前的状态（例如要用 Multisim 时）
@@ -506,7 +506,7 @@ function Show-TeredoState {
 function Show-Menu {
     Write-Host ""
     Write-Host "============================================" -ForegroundColor Cyan
-    Write-Host "  地平线 4/5 线上联网 一键修复工具" -ForegroundColor Cyan
+    Write-Host "  地平线 4/5/6 线上联网 一键修复工具" -ForegroundColor Cyan
     Write-Host "============================================" -ForegroundColor Cyan
     Write-Host "  1. 应用修复（自动备份后执行文章全部设置）"
     Write-Host "  2. 一键还原（恢复修复前的设置）"

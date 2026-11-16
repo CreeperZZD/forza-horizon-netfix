@@ -1,3 +1,4 @@
 # 修复时生成的本地备份（含本机网络配置，不要提交）
 ForzaNetBackup.json
 *.log
+*.zip
