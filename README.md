@@ -14,7 +14,7 @@
 
 [![Download](https://img.shields.io/badge/Download-Latest%20Release-blue)](https://github.com/CreeperZZD/forza-horizon-netfix/releases/latest)
 
-下载 `ForzaHorizon-NetFix-v1.0.zip`，解压到任意目录（路径别带特殊符号）。也可以直接 clone 仓库。
+下载 `ForzaHorizon-NetFix-v1.1.zip`，解压到任意目录（路径别带特殊符号）。也可以直接 clone 仓库。
 
 ### 使用步骤
 
@@ -32,8 +32,10 @@
 | `Run-Fix.bat` | 一键修复 |
 | `Run-Restore.bat` | 一键还原（装回 NI 软件时用） |
 | `Run-Status.bat` | 查看联机参数，无需管理员 |
-| `ForzaHorizonNetFix.ps1` | 主脚本，等价于 `-Action Fix/Restore/Status` |
+| `ForzaHorizonNetFix.ps1` | 主脚本，支持 `-Action Fix/Restore/Status` 与 `-Lang Auto/zh/en` |
 | `ForzaNetBackup.json` | 首次修复自动生成，**别删**，还原靠它 |
+
+> 脚本输出中英双语，默认跟随系统语言；英文系统会自动显示英文，也可强制指定：`ForzaHorizonNetFix.ps1 -Action Status -Lang en`。
 
 ### 改了什么
 
@@ -47,7 +49,7 @@
 
 ### 为什么连不上
 
-地平线的联机是 P2P，靠 Teredo 穿过 NAT 直连玩家。最常见的原因是 **`IP Helper` 服务被禁用**（优化软件最爱关它），Teredo 直接 offline；其次是 **默认服务器连不上**——网上流传的那批公共服务器大半已失效（`teredo.remlab.net` 等域名都解析不到了），脚本会自动跳过，实测常用 `win1710.ipv6.microsoft.com`。
+地平线的联机是 P2P，靠 Teredo 穿过 NAT 直连玩家。最常见的原因是 **`IP Helper` 服务被禁用**（优化软件最爱关它），Teredo 直接 offline；其次是 **服务器域名解析不稳定**——网上流传的那批公共服务器时通时不通，同一台机器换个网络解析结果都不一样，脚本每次运行都会重新校验并跳过解析不到的，再按延迟排序，设置后还会验证状态、不达标就自动换下一个。
 
 如果状态已经是 `qualified` 但还是连不上，看游戏里的 NAT 类型：`严格 / 受限`、`symmetric` 属于运营商大内网，只能开 UPnP、光猫桥接或挂加速器，脚本管不到这一层。
 
@@ -74,7 +76,7 @@ Tested on Windows 11 with Horizon 5; Horizon 4 and 6 use the same Xbox Live netw
 
 ### Download
 
-Grab `ForzaHorizon-NetFix-v1.0.zip` from the [latest release](https://github.com/CreeperZZD/forza-horizon-netfix/releases/latest), unzip it anywhere (avoid special characters in the path), or just clone the repo.
+Grab `ForzaHorizon-NetFix-v1.1.zip` from the [latest release](https://github.com/CreeperZZD/forza-horizon-netfix/releases/latest), unzip it anywhere (avoid special characters in the path), or just clone the repo.
 
 ### Usage
 
@@ -92,8 +94,10 @@ Need Multisim / LabVIEW? Run `Run-Restore.bat` to roll back, then `Run-Fix.bat` 
 | `Run-Fix.bat` | Apply the fix |
 | `Run-Restore.bat` | Restore previous settings |
 | `Run-Status.bat` | Show Teredo state (no admin needed) |
-| `ForzaHorizonNetFix.ps1` | Main script (`-Action Fix/Restore/Status`) |
+| `ForzaHorizonNetFix.ps1` | Main script (`-Action Fix/Restore/Status`, `-Lang Auto/zh/en`) |
 | `ForzaNetBackup.json` | Auto-created backup, **do not delete** |
+
+> Script output is bilingual and follows the system UI language (English UI → English text). Force it with `ForzaHorizonNetFix.ps1 -Action Status -Lang en`.
 
 ### What it changes
 
@@ -107,7 +111,7 @@ Need Multisim / LabVIEW? Run `Run-Restore.bat` to roll back, then `Run-Fix.bat` 
 
 ### Why it breaks
 
-Horizon's online play is P2P and relies on Teredo to punch through NAT. The usual culprit is a disabled **`IP Helper`** service — tuning utilities love to turn it off, which takes Teredo offline. Second is a dead Teredo server: most public servers in old guides no longer resolve (`teredo.remlab.net` and friends). The script skips them automatically; `win1710.ipv6.microsoft.com` is what worked here.
+Horizon's online play is P2P and relies on Teredo to punch through NAT. The usual culprit is a disabled **`IP Helper`** service — tuning utilities love to turn it off, which takes Teredo offline. Second is flaky server DNS: the public servers in old guides come and go, and the same machine may resolve different ones on different networks. The script re-checks every run, skips unresolvable entries, ranks the rest by latency, then verifies the state and falls back to the next server if needed.
 
 If Teredo is `qualified` but the game still fails, check the in-game NAT type. `Strict` / `symmetric` means carrier-grade NAT — enable UPnP, bridge your modem, or use a gaming accelerator. That layer is out of scope.
 
