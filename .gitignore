@@ -2,3 +2,5 @@
 ForzaNetBackup.json
 *.log
 *.zip
+# 解压出来的发布包目录
+ForzaHorizon-NetFix-v*/
